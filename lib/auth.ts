@@ -1,11 +1,11 @@
-import NextAuth from "next-auth";
-import { NextAuthOptions, JWT } from "next-auth";
+import NextAuth, { JWT } from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 import GithubProvider from "next-auth/providers/github";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { compare } from "bcrypt";
 import { AppDataSource } from "./data-source";
 import { User as AppUser } from "./entity/User";
+import { NextAuthOptions } from "next-auth";
 
 export const authOptions: NextAuthOptions = {
   providers: [
@@ -35,7 +35,7 @@ export const authOptions: NextAuthOptions = {
 
         if (user && (await compare(credentials.password, user.password))) {
           const { password, ...userWithoutPassword } = user;
-          return { ...userWithoutPassword, id: user.id.toString() }; // Convertir l'ID en string
+          return { ...userWithoutPassword, id: Number(user.id) };
         }
 
         return null;
@@ -46,17 +46,17 @@ export const authOptions: NextAuthOptions = {
     strategy: "jwt",
   },
   callbacks: {
-    async jwt({ token, user }: { token: JWT; user?: AppUser }) {
+    async jwt({ token, user }) {
       if (user) {
         token.id = user.id;
       }
       return token;
     },
-    async session({ session, token }: { session: any; token: JWT }) {
+    async session({ session, token }) {
       if (token) {
         session.user = {
           ...session.user,
-          id: token.id as unknown as string, // On s'assure que l'ID est un string
+          id: token.id as unknown as number, // On s'assure que l'ID est un number
         };
       }
       return session;
@@ -64,5 +64,3 @@ export const authOptions: NextAuthOptions = {
   },
   secret: process.env.NEXTAUTH_SECRET,
 };
-
-export default authOptions;

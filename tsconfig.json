@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "target": "esnext",
     "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
     "skipLibCheck": true,
@@ -9,12 +10,12 @@
     "emitDecoratorMetadata": true,
     "esModuleInterop": true,
     "module": "esnext",
-    "moduleResolution": "bundler",
+    "moduleResolution": "node",
     "resolveJsonModule": true,
     "isolatedModules": true,
     "jsx": "preserve",
     "incremental": true,
-    "baseUrl": "./",
+    // "baseUrl": "./",
     "plugins": [
       {
         "name": "next"
@@ -31,7 +32,9 @@
     ".next/types/**/*.ts",
     "next-auth.d.ts", // Ajout explicite du fichier de types
     "lib/**/*", // Inclusion des fichiers dans le dossier lib
-    "lib/data-source.ts"
+    "lib/data-source.ts",
+    "app/api/auth/[...nextauth]",
+    "migration/**/*.ts"
   ],
   "exclude": ["node_modules"]
 }

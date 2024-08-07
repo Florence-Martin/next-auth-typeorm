@@ -4,7 +4,7 @@ import React from "react";
 import {
   GoogleSignInButton,
   GithubSignInButton,
-  CredentialsSignInButton,
+  // CredentialsSignInButton,
 } from "@/components/signInButtons";
 import { CredentialsForm } from "@/components/credentialForm";
 

@@ -58,7 +58,7 @@ export const authOptions: NextAuthOptions = {
       if (token) {
         session.user = {
           ...session.user,
-          id: token.id as string, // Ajout de l'ID de l'utilisateur à la session
+          id: token.id as unknown as string, // Ajout de l'ID de l'utilisateur à la session
         };
       }
       return session;

@@ -1,11 +1,10 @@
-import NextAuth, { JWT } from "next-auth";
+import { NextAuthOptions } from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 import GithubProvider from "next-auth/providers/github";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { compare } from "bcrypt";
 import { AppDataSource } from "./data-source";
 import { User as AppUser } from "./entity/User";
-import { NextAuthOptions } from "next-auth";
 
 export const authOptions: NextAuthOptions = {
   providers: [
@@ -35,28 +34,31 @@ export const authOptions: NextAuthOptions = {
 
         if (user && (await compare(credentials.password, user.password))) {
           const { password, ...userWithoutPassword } = user;
-          return { ...userWithoutPassword, id: Number(user.id) };
+          return userWithoutPassword; // Pas de conversion de l'ID
         }
 
         return null;
       },
     }),
   ],
+  // indique à TypeScript que "jwt" est une valeur littérale, type attendu par NextAuth.
   session: {
-    strategy: "jwt",
+    strategy: "jwt" as const,
   },
   callbacks: {
     async jwt({ token, user }) {
+      // Ajout de propriétés supplémentaires au token JWT lors de la connexion
       if (user) {
-        token.id = user.id;
+        token.id = user.id; // Ajout de l'ID de l'utilisateur au token JWT
       }
       return token;
     },
     async session({ session, token }) {
+      // Exposer uniquement certaines données au client
       if (token) {
         session.user = {
           ...session.user,
-          id: token.id as unknown as number, // On s'assure que l'ID est un number
+          id: token.id as string, // Ajout de l'ID de l'utilisateur à la session
         };
       }
       return session;

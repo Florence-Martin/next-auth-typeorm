@@ -5,4 +5,10 @@ export default withAuth({
   pages: {
     signIn: "/authentification/signin",
   },
+  callbacks: {
+    async authorized({ req, token }) {
+      // ajout de restriction
+      return !!token;
+    },
+  },
 });

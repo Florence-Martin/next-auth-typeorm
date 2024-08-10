@@ -10,17 +10,20 @@ import { CredentialsForm } from "@/components/credentialForm";
 
 export default function Page() {
   return (
-    <div className="w-full flex flex-col items-center justify-center min-h-screen py-2">
-      <div className="flex flex-col items-center mt-10 p-10 shadow-md">
-        <h1 className="mt-10 mb-4 text-4xl font-bold">Sign In</h1>
-        <GoogleSignInButton />
-        <GithubSignInButton />
-        <span className="text-2xl font-semibold text-white text-center mt-8">
-          Or
-        </span>
-        <CredentialsForm />
-        <div className="mt-6">
-          <SignUpButton />
+    <div className="w-full flex items-center min-h-screen p-4 lg:justify-center">
+      <div className="w-full max-w-md border-2 rounded-lg shadow-lg p-6">
+        <div className="flex flex-col items-center p-6 shadow-md">
+          <h1 className="text-4xl text-gray-400 font-bold">Sign In</h1>
+          <GoogleSignInButton />
+          <GithubSignInButton />
+          <span className="text-2xl text-gray-400 font-semibold text-center mt-8">
+            Or
+          </span>
+
+          <CredentialsForm />
+          <div className="w-full mt-2 block justify-between">
+            <SignUpButton />
+          </div>
         </div>
       </div>
     </div>

@@ -28,4 +28,12 @@ export class User {
   @IsString()
   @IsOptional()
   provider?: string; // Example: 'google', 'GitHub'
+
+  @Column({ type: "text", nullable: true })
+  @IsOptional()
+  resetToken?: string | null;
+
+  @Column({ type: "timestamp", nullable: true })
+  @IsOptional()
+  resetTokenExpiry?: Date | null;
 }

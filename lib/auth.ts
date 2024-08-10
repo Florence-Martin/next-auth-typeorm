@@ -63,6 +63,10 @@ export const authOptions: NextAuthOptions = {
       }
       return session;
     },
+    async redirect({ url, baseUrl }) {
+      // Redirection vers la page "hello" après connexion
+      return "/hello-page";
+    },
   },
   secret: process.env.NEXTAUTH_SECRET,
 };

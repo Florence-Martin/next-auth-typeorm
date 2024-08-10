@@ -4,8 +4,8 @@ import React from "react";
 import {
   GoogleSignInButton,
   GithubSignInButton,
-  // CredentialsSignInButton,
 } from "@/components/signInButtons";
+import { SignUpButton } from "@/components/SignUpButton";
 import { CredentialsForm } from "@/components/credentialForm";
 
 export default function Page() {
@@ -18,8 +18,10 @@ export default function Page() {
         <span className="text-2xl font-semibold text-white text-center mt-8">
           Or
         </span>
-        {/* <CredentialsSignInButton /> */}
         <CredentialsForm />
+        <div className="mt-6">
+          <SignUpButton />
+        </div>
       </div>
     </div>
   );

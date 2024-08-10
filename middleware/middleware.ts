@@ -12,3 +12,4 @@ export default withAuth({
     },
   },
 });
+export const config = { matcher: ["/hello-page", "/autres-pages-protegees"] };

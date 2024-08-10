@@ -1855,9 +1855,9 @@
       "license": "MIT"
     },
     "node_modules/@types/node": {
-      "version": "20.14.14",
-      "resolved": "https://registry.npmjs.org/@types/node/-/node-20.14.14.tgz",
-      "integrity": "sha512-d64f00982fS9YoOgJkAMolK7MN8Iq3TDdVjchbYHdEmjth/DHowx82GnoA+tVUAN+7vxfYUgAzi+JXbKNd2SDQ==",
+      "version": "20.14.15",
+      "resolved": "https://registry.npmjs.org/@types/node/-/node-20.14.15.tgz",
+      "integrity": "sha512-Fz1xDMCF/B00/tYSVMlmK7hVeLh7jE5f3B7X1/hmV0MJBwE27KlS7EvD/Yp+z1lm8mVhwV5w+n8jOZG8AfTlKw==",
       "devOptional": true,
       "license": "MIT",
       "dependencies": {
@@ -3781,9 +3781,9 @@
       }
     },
     "node_modules/electron-to-chromium": {
-      "version": "1.5.5",
-      "resolved": "https://registry.npmjs.org/electron-to-chromium/-/electron-to-chromium-1.5.5.tgz",
-      "integrity": "sha512-QR7/A7ZkMS8tZuoftC/jfqNkZLQO779SSW3YuZHP4eXpj3EffGLFcB/Xu9AAZQzLccTiCV+EmUo3ha4mQ9wnlA==",
+      "version": "1.5.6",
+      "resolved": "https://registry.npmjs.org/electron-to-chromium/-/electron-to-chromium-1.5.6.tgz",
+      "integrity": "sha512-jwXWsM5RPf6j9dPYzaorcBSUg6AiqocPEyMpkchkvntaH9HGfOOMZwxMJjDY/XEs3T5dM7uyH1VhRMkqUU9qVw==",
       "dev": true,
       "license": "ISC"
     },
@@ -8326,9 +8326,9 @@
       }
     },
     "node_modules/preact-render-to-string": {
-      "version": "6.5.7",
-      "resolved": "https://registry.npmjs.org/preact-render-to-string/-/preact-render-to-string-6.5.7.tgz",
-      "integrity": "sha512-nACZDdv/ZZciuldVYMcfGqr61DKJeaAfPx96hn6OXoBGhgtU2yGQkA0EpTzWH4SvnwF0syLsL4WK7AIp3Ruc1g==",
+      "version": "6.5.8",
+      "resolved": "https://registry.npmjs.org/preact-render-to-string/-/preact-render-to-string-6.5.8.tgz",
+      "integrity": "sha512-VwldmyF+5G6eqTH26uyXY2+a9fh7ry8roYnIEwarB6OnT1bVN7lnlFvh0ldeKJ7/JtvMoWO5jz9tyykRlAIDyA==",
       "license": "MIT",
       "peerDependencies": {
         "preact": ">=10"

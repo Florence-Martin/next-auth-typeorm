@@ -63,6 +63,24 @@ export const authOptions: NextAuthOptions = {
       }
       return session;
     },
+    // async redirect({ url, baseUrl }) {
+    //   // Redirection vers la page "hello" après connexion
+    //   return "/authentification/hello-page";
+    // },
+    async redirect({ url, baseUrl }) {
+      // Si l'authentification est réussie, rediriger vers la page "hello-page"
+      const isAuthenticated = url && !url.includes("/authentification/signin");
+
+      if (isAuthenticated) {
+        console.log("Utilisateur authentifié, redirection vers /hello-page");
+        return "/authentification/hello-page";
+      } else {
+        console.log(
+          "Utilisateur non authentifié, redirection vers /authentification/signin"
+        );
+        return baseUrl + "/authentification/signin";
+      }
+    },
   },
   secret: process.env.NEXTAUTH_SECRET,
 };

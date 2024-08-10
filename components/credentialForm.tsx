@@ -26,8 +26,7 @@ export function CredentialsForm(props: CredentialsFormProps) {
     });
 
     if (signInResponse && !signInResponse.error) {
-      //Redirect to homepage (/timeline)
-      router.push("/timeline");
+      router.push("/authentification/hello-page");
     } else {
       console.log("Error: ", signInResponse);
       setError("Your Email or Password is wrong!");

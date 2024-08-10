@@ -81,6 +81,7 @@
 
 - Créer une page de connexion personnalisée pour permettre aux utilisateurs de se connecter via des identifiants ou des réseaux sociaux.
 - Ajouter des formulaires et des boutons de connexion pour les différents fournisseurs d’authentification.
+- Ajouter la possibilité de d'enregistrer **Sign up**
 
 </details>
 

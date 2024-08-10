@@ -14,8 +14,8 @@ export class UserSeeder {
       },
       {
         email: "user@example.com",
-        password: await bcrypt.hash("user123", 10),
-        name: "Regular User",
+        password: await bcrypt.hash("user1234", 10),
+        name: "Member User",
       },
     ];
 

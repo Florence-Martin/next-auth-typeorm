@@ -15,7 +15,7 @@
     "incremental": true,
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
-    //"baseUrl": "./",
+    //"baseUrl": ".",
     "types": ["jest", "node", "next-auth"],
     "plugins": [
       {

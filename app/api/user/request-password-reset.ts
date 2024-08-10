@@ -3,7 +3,9 @@ import { AppDataSource } from "@/lib/data-source";
 import { User } from "@/lib/entity/User";
 import { randomBytes } from "crypto";
 import { hash } from "bcryptjs";
+import { sendResetEmail } from "./../../../lib/mailer";
 
+//Ce fichier gère la génération d’un jeton de réinitialisation de mot de passe et l’envoi d’un e-mail à l’utilisateur.
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
@@ -30,11 +32,15 @@ export default async function handler(
 
     await userRepository.save(user);
 
-    // Envoyer un email de réinitialisation (à implémenter)
-    // sendResetEmail(user.email, resetToken);
+    // Envoyer l'email de réinitialisation
+    await sendResetEmail(user.email, resetToken); // Implémentez cette fonction pour envoyer l'e-mail
 
-    return res.status(200).json({ success: true });
+    return res.status(200).json({
+      success: true,
+      message: "Un email de réinitialisation a été envoyé.",
+    });
   } catch (error) {
-    return res.status(500).json({ error: "Internal server error" });
+    console.error("Erreur lors de la génération du jeton:", error);
+    return res.status(500).json({ error: "Erreur interne du serveur" });
   }
 }

@@ -1,5 +1,6 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import { hash } from "bcryptjs";
+import bcrypt from "bcryptjs";
 import { AppDataSource } from "@/lib/data-source";
 import { User as AppUser } from "@/lib/entity/User";
 
@@ -8,7 +9,7 @@ export default async function handler(
   res: NextApiResponse
 ) {
   if (req.method !== "PUT") {
-    return res.status(405).json({ error: "Method not allowed" });
+    return res.status(405).json({ error: "Méthode non autorisée" });
   }
 
   try {
@@ -16,12 +17,11 @@ export default async function handler(
       await AppDataSource.initialize();
     }
 
-    const { email, name, password } = req.body;
+    const { email, token, password } = req.body;
 
-    if (!email || (!name && !password)) {
+    if (!email || !token || !password) {
       return res.status(400).json({
-        error:
-          "Email is required and at least one field to update (name or password).",
+        error: "L'email, le token et le mot de passe sont requis.",
       });
     }
 
@@ -29,22 +29,35 @@ export default async function handler(
     const user = await userRepository.findOneBy({ email });
 
     if (!user) {
-      return res.status(404).json({ error: "User not found." });
+      return res.status(404).json({ error: "Utilisateur non trouvé." });
     }
 
-    if (name) {
-      user.name = name;
+    // Vérifier que le resetToken n'est pas null ou undefined
+    if (!user.resetToken) {
+      return res.status(400).json({ error: "Token non valide." });
     }
 
-    if (password) {
-      user.password = await hash(password, 10);
+    // Vérifier si le token est valide et n'a pas expiré
+    const isTokenValid = await bcrypt.compare(token, user.resetToken);
+    const isTokenExpired =
+      !user.resetTokenExpiry || user.resetTokenExpiry < new Date();
+
+    if (!isTokenValid || isTokenExpired) {
+      return res.status(400).json({ error: "Token invalide ou expiré." });
     }
+
+    // Hacher le nouveau mot de passe et mettre à jour l'utilisateur
+    user.password = await hash(password, 10);
+    user.resetToken = null; // Supprimer le token après utilisation
+    user.resetTokenExpiry = null;
 
     await userRepository.save(user);
 
-    return res.status(200).json({ success: true });
+    return res
+      .status(200)
+      .json({ success: true, message: "Mot de passe mis à jour avec succès." });
   } catch (error) {
-    console.error("Error during user update:", error);
-    return res.status(500).json({ error: "Internal server error." });
+    console.error("Erreur lors de la mise à jour du mot de passe:", error);
+    return res.status(500).json({ error: "Erreur interne du serveur." });
   }
 }

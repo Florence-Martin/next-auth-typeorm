@@ -14,7 +14,7 @@ export default function ResetPasswordPage() {
     e.preventDefault();
 
     try {
-      const response = await fetch("/api/auth/reset-password", {
+      const response = await fetch("/api/user/request-password-reset", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -33,7 +33,7 @@ export default function ResetPasswordPage() {
         setMessage(null);
       }
     } catch (err) {
-      console.error("Error:", err);
+      console.error("Erreur:", err);
       setError("Une erreur est survenue. Veuillez réessayer.");
       setMessage(null);
     }
@@ -69,7 +69,7 @@ export default function ResetPasswordPage() {
                 id="email"
                 type="email"
                 required
-                className="w-full px-4 py-2 mt-1 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
+                className="w-full px-4 text-gray-800 py-2 mt-1 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="Entrez votre adresse email"

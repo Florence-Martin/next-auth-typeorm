@@ -16,7 +16,7 @@
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
     //"baseUrl": "./",
-    "types": ["node", "next-auth"],
+    "types": ["jest", "node", "next-auth"],
     "plugins": [
       {
         "name": "next"

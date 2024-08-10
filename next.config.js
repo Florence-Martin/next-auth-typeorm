@@ -2,10 +2,10 @@
 module.exports = {
   reactStrictMode: true,
   serverRuntimeConfig: {
-    // Add your server runtime config here
+    // Ajoute ici les configurations spécifiques au serveur
   },
   publicRuntimeConfig: {
-    // Add your public runtime config here
+    // Ajoute ici les configurations accessibles au client
   },
   webpack: (config) => {
     config.resolve.alias = {

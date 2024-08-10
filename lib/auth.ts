@@ -49,7 +49,7 @@ export const authOptions: NextAuthOptions = {
     async jwt({ token, user }) {
       // Ajout de propriétés supplémentaires au token JWT lors de la connexion
       if (user) {
-        token.id = user.id; // Ajout de l'ID de l'utilisateur au token JWT
+        token.id = (user as any).id || (user as any).sub || undefined;
       }
       return token;
     },
@@ -63,23 +63,13 @@ export const authOptions: NextAuthOptions = {
       }
       return session;
     },
-    // async redirect({ url, baseUrl }) {
-    //   // Redirection vers la page "hello" après connexion
-    //   return "/authentification/hello-page";
-    // },
-    async redirect({ url, baseUrl }) {
-      // Si l'authentification est réussie, rediriger vers la page "hello-page"
-      const isAuthenticated = url && !url.includes("/authentification/signin");
 
-      if (isAuthenticated) {
-        console.log("Utilisateur authentifié, redirection vers /hello-page");
-        return "/authentification/hello-page";
-      } else {
-        console.log(
-          "Utilisateur non authentifié, redirection vers /authentification/signin"
-        );
-        return baseUrl + "/authentification/signin";
+    async redirect({ url, baseUrl }) {
+      if (url.startsWith(baseUrl)) {
+        // Authentification réussie via Google ou GitHub
+        return baseUrl + "/authentification/hello-page";
       }
+      return baseUrl + "/authentification/signin";
     },
   },
   secret: process.env.NEXTAUTH_SECRET,

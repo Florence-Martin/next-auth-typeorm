@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import React from "react";
 
@@ -38,6 +38,17 @@ export default function ResetPasswordPage() {
       setMessage(null);
     }
   };
+
+  // Redirection automatique après envoi réussi
+  useEffect(() => {
+    if (message) {
+      const timer = setTimeout(() => {
+        router.push("/login");
+      }, 5000); // Redirige après 5 secondes
+
+      return () => clearTimeout(timer);
+    }
+  }, [message, router]);
 
   return (
     <div className="w-full flex items-center min-h-screen p-4 lg:justify-center">

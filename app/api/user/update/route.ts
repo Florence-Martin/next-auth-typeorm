@@ -1,40 +1,40 @@
-import { NextApiRequest, NextApiResponse } from "next";
+import { NextResponse } from "next/server";
 import { hash } from "bcryptjs";
 import bcrypt from "bcryptjs";
 import { AppDataSource } from "@/lib/data-source";
 import { User as AppUser } from "@/lib/entity/User";
 
-export default async function handler(
-  req: NextApiRequest,
-  res: NextApiResponse
-) {
-  if (req.method !== "PUT") {
-    return res.status(405).json({ error: "Méthode non autorisée" });
-  }
-
+// Ce fichier gère la mise à jour du mot de passe de l'utilisateur.
+export async function PUT(request: Request) {
   try {
-    if (!AppDataSource.isInitialized) {
-      await AppDataSource.initialize();
-    }
-
-    const { email, token, password } = req.body;
+    const { email, token, password } = await request.json();
 
     if (!email || !token || !password) {
-      return res.status(400).json({
-        error: "L'email, le token et le mot de passe sont requis.",
-      });
+      return NextResponse.json(
+        {
+          error: "L'email, le token et le mot de passe sont requis.",
+        },
+        { status: 400 }
+      );
+    }
+
+    if (!AppDataSource.isInitialized) {
+      await AppDataSource.initialize();
     }
 
     const userRepository = AppDataSource.getRepository(AppUser);
     const user = await userRepository.findOneBy({ email });
 
     if (!user) {
-      return res.status(404).json({ error: "Utilisateur non trouvé." });
+      return NextResponse.json(
+        { error: "Utilisateur non trouvé." },
+        { status: 404 }
+      );
     }
 
     // Vérifier que le resetToken n'est pas null ou undefined
     if (!user.resetToken) {
-      return res.status(400).json({ error: "Token non valide." });
+      return NextResponse.json({ error: "Token non valide." }, { status: 400 });
     }
 
     // Vérifier si le token est valide et n'a pas expiré
@@ -43,7 +43,10 @@ export default async function handler(
       !user.resetTokenExpiry || user.resetTokenExpiry < new Date();
 
     if (!isTokenValid || isTokenExpired) {
-      return res.status(400).json({ error: "Token invalide ou expiré." });
+      return NextResponse.json(
+        { error: "Token invalide ou expiré." },
+        { status: 400 }
+      );
     }
 
     // Hacher le nouveau mot de passe et mettre à jour l'utilisateur
@@ -53,11 +56,15 @@ export default async function handler(
 
     await userRepository.save(user);
 
-    return res
-      .status(200)
-      .json({ success: true, message: "Mot de passe mis à jour avec succès." });
+    return NextResponse.json(
+      { success: true, message: "Mot de passe mis à jour avec succès." },
+      { status: 200 }
+    );
   } catch (error) {
     console.error("Erreur lors de la mise à jour du mot de passe:", error);
-    return res.status(500).json({ error: "Erreur interne du serveur." });
+    return NextResponse.json(
+      { error: "Erreur interne du serveur." },
+      { status: 500 }
+    );
   }
 }

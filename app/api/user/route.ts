@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { AppDataSource } from "@/lib/data-source";
 import { User as AppUser } from "@/lib/entity/User";
 
+
 export async function GET() {
   try {
     if (!AppDataSource.isInitialized) {

@@ -1,6 +1,6 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import { createMocks } from "node-mocks-http";
-import handler from "../app/api/user/update/route";
+import handler from "../app/api/user/handler";
 import { AppDataSource } from "@/lib/data-source";
 import { User } from "./../lib/entity/User";
 import { hash, compare } from "bcryptjs";
